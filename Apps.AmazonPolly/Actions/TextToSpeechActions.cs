@@ -16,19 +16,21 @@ public class TextToSpeechActions
 {
     #region Actions
 
+    //TODO: Add lexicon ids to the request
     [Action("Synthesize speech", Description = "Synthesize speech from text")]
     public async Task<TextToSpeechResponseModel> SynthesizeSpeech(
         IEnumerable<AuthenticationCredentialsProvider> authenticationCredentialsProviders,
         [ActionParameter] SynthesizeSpeechRequestModel inputData)
     {
         var client = AmazonPollyClientsFactory.CreateClientWithCreds(authenticationCredentialsProviders.ToArray());
-        var voiceId = await GetAppropriateVoice(client, inputData.LanguageCode);
+        var voiceId = await GetAppropriateVoice(client, inputData);
 
         var request = new SynthesizeSpeechRequest
         {
             Text = inputData.Text,
             TextType = inputData.IsSsml ? TextType.Ssml : TextType.Text,
             OutputFormat = OutputFormat.Mp3,
+            Engine = inputData.Engine,
             VoiceId = voiceId,
         };
 
@@ -41,15 +43,30 @@ public class TextToSpeechActions
 
     #region Utils
 
-    private async Task<VoiceId> GetAppropriateVoice(AmazonPollyClient client, string languageCode)
+    private async Task<VoiceId> GetAppropriateVoice(AmazonPollyClient client,
+        SynthesizeSpeechRequestModel actionRequest)
     {
+        var voiceName = actionRequest.VoiceName;
+        var languageCode = actionRequest.LanguageCode;
+        var engine = actionRequest.Engine;
+
         var request = new DescribeVoicesRequest
         {
-            LanguageCode = languageCode
+            LanguageCode = languageCode,
+            Engine = engine
         };
-        
-        var voicesResponse = await PollyRequestsHandler.ExecutePollyAction(client.DescribeVoicesAsync, request);
-        return voicesResponse.Voices.First().Id;
+
+        var voices = new List<Voice>();
+        do
+        {
+            var voicesResponse = await PollyRequestsHandler.ExecutePollyAction(client.DescribeVoicesAsync, request);
+            request.NextToken = voicesResponse.NextToken;
+
+            voices.AddRange(voicesResponse.Voices);
+        } while (request.NextToken is not null);
+
+        return voices.FirstOrDefault(x => x.Name.Equals(voiceName, StringComparison.OrdinalIgnoreCase))?.Id ??
+               throw new Exception($"The voice {voiceName} is not supported for {languageCode} language and {engine} engine");
     }
 
     #endregion

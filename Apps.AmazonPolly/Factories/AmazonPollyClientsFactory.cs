@@ -18,7 +18,7 @@ public static class AmazonPollyClientsFactory
 
         return new(key.Value, secret.Value, new AmazonPollyConfig()
         {
-            RegionEndpoint = RegionEndpoint.USWest1
+            RegionEndpoint = RegionEndpoint.USEast1
         });
     }
 }
