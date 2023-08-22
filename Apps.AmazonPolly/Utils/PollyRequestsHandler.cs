@@ -1,6 +1,4 @@
-﻿using Amazon.Polly;
-
-namespace Apps.AmazonPolly.Utils;
+﻿namespace Apps.AmazonPolly.Utils;
 
 public static class PollyRequestsHandler
 {

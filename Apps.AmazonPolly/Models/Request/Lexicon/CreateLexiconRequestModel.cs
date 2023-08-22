@@ -1,4 +1,4 @@
-﻿namespace Apps.AmazonPolly.Models.Request;
+﻿namespace Apps.AmazonPolly.Models.Request.Lexicon;
 
 public record CreateLexiconRequestModel
 {
