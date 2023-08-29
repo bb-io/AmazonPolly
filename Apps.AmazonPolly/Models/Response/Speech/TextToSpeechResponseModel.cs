@@ -1,5 +1,5 @@
-﻿using Blackbird.Applications.Sdk.Common;
+﻿using File = Blackbird.Applications.Sdk.Common.Files.File;
 
 namespace Apps.AmazonPolly.Models.Response.Speech;
 
-public record TextToSpeechResponseModel([property: Display("File content")] byte[] FileContent);
+public record TextToSpeechResponseModel(File File);

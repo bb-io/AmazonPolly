@@ -1,4 +1,5 @@
-﻿using Amazon.Polly;
+﻿using System.Net.Mime;
+using Amazon.Polly;
 using Amazon.Polly.Model;
 using Apps.AmazonPolly.Extensions;
 using Apps.AmazonPolly.Factories;
@@ -9,6 +10,7 @@ using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Actions;
 using Blackbird.Applications.Sdk.Common.Authentication;
 using Blackbird.Applications.Sdk.Common.Invocation;
+using Blackbird.Applications.Sdk.Utils.Extensions.Files;
 
 namespace Apps.AmazonPolly.Actions;
 
@@ -42,7 +44,13 @@ public class TextToSpeechActions : BaseInvocable
         };
 
         var speechResponse = await PollyRequestsHandler.ExecutePollyAction(client.SynthesizeSpeechAsync, request);
-        return new(speechResponse.AudioStream.GetBytes());
+        var fileData = await speechResponse.AudioStream.GetByteData();
+        
+        return new(new(fileData)
+        {
+            Name = $"{inputData.VoiceName}",
+            ContentType = MediaTypeNames.Application.Octet
+        });
     }
 
     #endregion
