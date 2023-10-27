@@ -4,9 +4,9 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Product>Blackbird Amazon Polly</Product>
+        <Product>Amazon Polly</Product>
         <Description>Deep learning technologies app for synthesizing natural-sounding human speech</Description>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <AssemblyName>Apps.AmazonPolly</AssemblyName>
     </PropertyGroup>
 
@@ -16,4 +16,7 @@
         <PackageReference Include="Blackbird.Applications.Sdk.Utils" Version="1.0.4"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource CopyToOutputDirectory="Always" Include="image\icon.png"/>
+    </ItemGroup>
 </Project>
