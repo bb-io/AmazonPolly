@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <Product>Amazon Polly</Product>
         <Description>Deep learning technologies app for synthesizing natural-sounding human speech</Description>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <AssemblyName>Apps.AmazonPolly</AssemblyName>
     </PropertyGroup>
 
