@@ -1,22 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <Product>Amazon Polly</Product>
-        <Description>Deep learning technologies app for synthesizing natural-sounding human speech</Description>
-        <Version>1.0.3</Version>
-        <AssemblyName>Apps.AmazonPolly</AssemblyName>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="AWSSDK.Polly" Version="3.7.107.10"/>
-        <PackageReference Include="Blackbird.Applications.Sdk.Common" Version="2.2.0-alpha4" />
-        <PackageReference Include="Blackbird.Applications.Sdk.Utils" Version="1.0.4"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource CopyToOutputDirectory="Always" Include="image\icon.png"/>
-    </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Product>Amazon Polly</Product>
+    <Description>Deep learning technologies app for synthesizing natural-sounding human speech</Description>
+    <Version>1.0.4</Version>
+    <AssemblyName>Apps.AmazonPolly</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Polly" Version="3.7.107.10" />
+    <PackageReference Include="Blackbird.Applications.Sdk.Common" Version="2.2.0-alpha4" />
+    <PackageReference Include="Blackbird.Applications.Sdk.Utils" Version="1.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource CopyToOutputDirectory="Always" Include="image\icon.png" />
+  </ItemGroup>
 </Project>
