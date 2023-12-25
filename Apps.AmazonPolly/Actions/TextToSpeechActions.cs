@@ -1,7 +1,6 @@
 ﻿using System.Net.Mime;
 using Amazon.Polly;
 using Amazon.Polly.Model;
-using Apps.AmazonPolly.Extensions;
 using Apps.AmazonPolly.Factories;
 using Apps.AmazonPolly.Models.Request.Speech;
 using Apps.AmazonPolly.Models.Response.Speech;
@@ -10,7 +9,7 @@ using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Actions;
 using Blackbird.Applications.Sdk.Common.Authentication;
 using Blackbird.Applications.Sdk.Common.Invocation;
-using Blackbird.Applications.Sdk.Utils.Extensions.Files;
+using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
 
 namespace Apps.AmazonPolly.Actions;
 
@@ -19,11 +18,15 @@ public class TextToSpeechActions : BaseInvocable
 {
     private IEnumerable<AuthenticationCredentialsProvider> Creds =>
         InvocationContext.AuthenticationCredentialsProviders;
-    
-    public TextToSpeechActions(InvocationContext invocationContext) : base(invocationContext)
+
+    private readonly IFileManagementClient _fileManagementClient;
+
+    public TextToSpeechActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) : base(
+        invocationContext)
     {
+        _fileManagementClient = fileManagementClient;
     }
-    
+
     #region Actions
 
     [Action("Synthesize speech", Description = "Synthesize speech from text")]
@@ -44,13 +47,11 @@ public class TextToSpeechActions : BaseInvocable
         };
 
         var speechResponse = await PollyRequestsHandler.ExecutePollyAction(client.SynthesizeSpeechAsync, request);
-        var fileData = await speechResponse.AudioStream.GetByteData();
-        
-        return new(new(fileData)
-        {
-            Name = $"{inputData.VoiceName}",
-            ContentType = MediaTypeNames.Application.Octet
-        });
+
+        var file = await _fileManagementClient.UploadAsync(speechResponse.AudioStream, MediaTypeNames.Application.Octet,
+            $"{inputData.VoiceName}");
+
+        return new(file);
     }
 
     #endregion
