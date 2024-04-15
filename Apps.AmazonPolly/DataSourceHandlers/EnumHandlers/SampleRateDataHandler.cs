@@ -1,14 +1,15 @@
-﻿using Blackbird.Applications.Sdk.Utils.Sdk.DataSourceHandlers;
+﻿using Blackbird.Applications.Sdk.Common.Dictionaries;
 
 namespace Apps.AmazonPolly.DataSourceHandlers.EnumHandlers;
 
-public class SampleRateDataHandler : EnumDataHandler
+public class SampleRateDataHandler : IStaticDataSourceHandler
 {
-    protected override Dictionary<string, string> EnumValues => new()
-    {
-        { "8000", "8000" },
-        { "16000", "16000" },
-        { "22050", "22050" },
-        { "24000", "24000" },
-    };
+    public Dictionary<string, string> GetData()
+        => new()
+        {
+            { "8000", "8000" },
+            { "16000", "16000" },
+            { "22050", "22050" },
+            { "24000", "24000" },
+        };
 }
