@@ -1,14 +1,15 @@
-﻿using Blackbird.Applications.Sdk.Utils.Sdk.DataSourceHandlers;
+﻿using Blackbird.Applications.Sdk.Common.Dictionaries;
 
 namespace Apps.AmazonPolly.DataSourceHandlers.EnumHandlers;
 
-public class OutputFormatDataHandler : EnumDataHandler
+public class OutputFormatDataHandler : IStaticDataSourceHandler
 {
-    protected override Dictionary<string, string> EnumValues => new()
-    {
-        { "json", "JSON" },
-        { "mp3", "MP3" },
-        { "ogg_vorbis", "Ogg Vorbis" },
-        { "pcm", "PCM" },
-    };
+    public Dictionary<string, string> GetData()
+        => new()
+        {
+            { "json", "JSON" },
+            { "mp3", "MP3" },
+            { "ogg_vorbis", "Ogg Vorbis" },
+            { "pcm", "PCM" },
+        };
 }

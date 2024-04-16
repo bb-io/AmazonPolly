@@ -1,12 +1,13 @@
-﻿using Blackbird.Applications.Sdk.Utils.Sdk.DataSourceHandlers;
+﻿using Blackbird.Applications.Sdk.Common.Dictionaries;
 
 namespace Apps.AmazonPolly.DataSourceHandlers.EnumHandlers;
 
-public class TextTypeDataHandler : EnumDataHandler
+public class TextTypeDataHandler : IStaticDataSourceHandler
 {
-    protected override Dictionary<string, string> EnumValues => new()
-    {
-        { "text", "Text" },
-        { "ssml", "SSML" }
-    };
+    public Dictionary<string, string> GetData()
+        => new()
+        {
+            { "text", "Text" },
+            { "ssml", "SSML" }
+        };
 }
