@@ -6,7 +6,18 @@ Blackbird is the new automation backbone for the language technology industry. B
 
 <!-- begin docs -->
 
-Documentation coming soon.
+Amazon Polly is a text-to-speech service that uses advanced deep learning technologies to convert written text into natural-sounding human speech. It supports multiple languages and voices, allowing developers to create applications that can talk and enhance user engagement through lifelike speech synthesis. Polly is commonly used for creating voice-enabled applications, automated customer service, and content accessibility.
+
+## Actions
+
+### Lexicon
+- **List lexicons** List pronunciation lexicons
+- **Get lexicon** Get pronunciation lexicon by name
+- **Delete lexicon** Delete pronunciation lexicon
+- **Create lexicon** Create a new lexicon
+
+### TextToSpeech
+- **Synthesize speech** Synthesize speech from text
 
 ## Feedback
 
