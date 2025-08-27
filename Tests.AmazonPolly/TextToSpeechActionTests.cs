@@ -13,7 +13,7 @@ namespace Tests.AmazonPolly
 
             var result = await action.SynthesizeSpeech(new Apps.AmazonPolly.Models.Request.Speech.SynthesizeSpeechRequestModel
             {
-                Text = "Hello, this is a test.",
+                Text = "Hello this is testing text from blackbird  ",
                 VoiceName = "Gregory",
                 //OutputFormat = Amazon.Polly.OutputFormat.Mp3,
                 Engine = "long-form",

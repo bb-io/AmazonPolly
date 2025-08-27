@@ -62,8 +62,12 @@ public class TextToSpeechActions : BaseInvocable
 
         var fileName = $"{inputData.VoiceName ?? "polly"}_{DateTime.UtcNow:yyyyMMddHHmmss}{extension}";
 
+        await using var ms = new MemoryStream();
+        await speechResponse.AudioStream.CopyToAsync(ms);
+        ms.Position = 0;
+
         var file = await _fileManagementClient.UploadAsync(
-            speechResponse.AudioStream,
+            ms,
             contentType,
             fileName);
 
