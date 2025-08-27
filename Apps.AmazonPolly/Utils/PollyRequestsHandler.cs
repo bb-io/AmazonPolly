@@ -1,4 +1,6 @@
-﻿namespace Apps.AmazonPolly.Utils;
+﻿using Blackbird.Applications.Sdk.Common.Exceptions;
+
+namespace Apps.AmazonPolly.Utils;
 
 public static class PollyRequestsHandler
 {
@@ -12,7 +14,7 @@ public static class PollyRequestsHandler
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw new PluginApplicationException(ex.Message);
         }
     }
 }

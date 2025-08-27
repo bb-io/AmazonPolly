@@ -8,5 +8,7 @@ public class EngineDataHandler : IStaticDataSourceHandler
     {
         { "neural", "Neural" },
         { "standard", "Standard" },
+        { "generative", "Generative" },
+        { "long-form", "Fong-form" },
     };
 }

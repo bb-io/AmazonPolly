@@ -11,22 +11,22 @@ public class ConnectionDefinition : IConnectionDefinition
         {
             Name = "Developer API key",
             AuthenticationType = ConnectionAuthenticationType.Undefined,
-            ConnectionUsage = ConnectionUsage.Actions,
             ConnectionProperties = new List<ConnectionProperty>
             {
-                new("access_key"),
+                new("access_key")
+                {
+                    DisplayName = "Access key",
+                    Sensitive = false
+                },
                 new("access_secret")
+                {
+                    DisplayName = "Access secret",
+                    Sensitive = true
+                }
             }
         }
     };
 
     public IEnumerable<AuthenticationCredentialsProvider> CreateAuthorizationCredentialsProviders(
-        Dictionary<string, string> values)
-    {
-        var accessKey = values.First(x => x.Key == "access_key");
-        var accessSecret = values.First(x => x.Key == "access_secret");
-
-        yield return new(AuthenticationCredentialsRequestLocation.None, accessKey.Key, accessKey.Value);
-        yield return new(AuthenticationCredentialsRequestLocation.None, accessSecret.Key, accessSecret.Value);
-    }
+         Dictionary<string, string> values) => values.Select(x => new AuthenticationCredentialsProvider(x.Key, x.Value)).ToList();
 }

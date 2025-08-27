@@ -48,10 +48,39 @@ public class TextToSpeechActions : BaseInvocable
 
         var speechResponse = await PollyRequestsHandler.ExecutePollyAction(client.SynthesizeSpeechAsync, request);
 
-        var file = await _fileManagementClient.UploadAsync(speechResponse.AudioStream, MediaTypeNames.Application.Octet,
-            $"{inputData.VoiceName}");
+        var contentType = string.IsNullOrWhiteSpace(speechResponse.ContentType)
+        ? GetMimeFallback(request.OutputFormat)
+        : speechResponse.ContentType;
+
+        var extension = contentType switch
+        {
+            "audio/mpeg" => ".mp3",
+            "audio/ogg" => ".ogg",
+            "audio/pcm" => ".pcm",
+            _ => ""
+        };
+
+        var fileName = $"{inputData.VoiceName ?? "polly"}_{DateTime.UtcNow:yyyyMMddHHmmss}{extension}";
+
+        await using var ms = new MemoryStream();
+        await speechResponse.AudioStream.CopyToAsync(ms);
+        ms.Position = 0;
+
+        var file = await _fileManagementClient.UploadAsync(
+            ms,
+            contentType,
+            fileName);
 
         return new(file);
+    }
+
+    private static string GetMimeFallback(OutputFormat format)
+    {
+        var v = format?.Value;
+        if (v == OutputFormat.Mp3.Value) return "audio/mpeg";
+        if (v == OutputFormat.Ogg_vorbis.Value) return "audio/ogg";
+        if (v == OutputFormat.Pcm.Value) return "audio/pcm";
+        return "application/octet-stream";
     }
 
     #endregion
