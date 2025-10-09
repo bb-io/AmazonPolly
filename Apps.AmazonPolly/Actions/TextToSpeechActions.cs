@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using Amazon.Polly;
+﻿using Amazon.Polly;
 using Amazon.Polly.Model;
 using Apps.AmazonPolly.Factories;
 using Apps.AmazonPolly.Models.Request.Speech;
@@ -13,19 +12,11 @@ using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
 
 namespace Apps.AmazonPolly.Actions;
 
-[ActionList]
-public class TextToSpeechActions : BaseInvocable
+[ActionList("Text to speech")]
+public class TextToSpeechActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) : BaseInvocable(invocationContext)
 {
     private IEnumerable<AuthenticationCredentialsProvider> Creds =>
         InvocationContext.AuthenticationCredentialsProviders;
-
-    private readonly IFileManagementClient _fileManagementClient;
-
-    public TextToSpeechActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) : base(
-        invocationContext)
-    {
-        _fileManagementClient = fileManagementClient;
-    }
 
     #region Actions
 
@@ -66,7 +57,7 @@ public class TextToSpeechActions : BaseInvocable
         await speechResponse.AudioStream.CopyToAsync(ms);
         ms.Position = 0;
 
-        var file = await _fileManagementClient.UploadAsync(
+        var file = await fileManagementClient.UploadAsync(
             ms,
             contentType,
             fileName);
