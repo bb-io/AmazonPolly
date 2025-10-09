@@ -10,16 +10,12 @@ using Blackbird.Applications.Sdk.Common.Invocation;
 
 namespace Apps.AmazonPolly.Actions;
 
-[ActionList]
-public class LexiconActions : BaseInvocable
+[ActionList("Lexicon")]
+public class LexiconActions(InvocationContext invocationContext) : BaseInvocable(invocationContext)
 {
     private IEnumerable<AuthenticationCredentialsProvider> Creds =>
         InvocationContext.AuthenticationCredentialsProviders;
-    
-    public LexiconActions(InvocationContext invocationContext) : base(invocationContext)
-    {
-    }
-    
+        
     [Action("List lexicons", Description = "List pronunciation lexicons")]
     public async Task<List<LexiconModel>> ListLexicons()
     {
