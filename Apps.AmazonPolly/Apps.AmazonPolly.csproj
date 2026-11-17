@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <Product>Amazon Polly</Product>
     <Description>Deep learning technologies app for synthesizing natural-sounding human speech</Description>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <AssemblyName>Apps.AmazonPolly</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
@@ -16,5 +16,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource CopyToOutputDirectory="Always" Include="image\icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\README.md" Link="README.md" CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>
